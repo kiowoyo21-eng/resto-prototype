@@ -1,3 +1,13 @@
+# Ember & Basil — Premium Restaurant Website v1.1 (Header Layout Fix)
+
+**What's new:** refined responsive header at narrow screen widths and desktop zoom, compact logo/controls, decorative top-bar icons that don't depend on font glyphs, and versioned CSS URLs to avoid stale Vercel styling. All menu, cart, checkout, order tracking, reservation, and staff-demo logic is unchanged.
+
+**Vercel deployment:** upload the **contents of this ZIP** to the root of a GitHub repository, import it into Vercel, select Framework Preset **Other**, leave build command empty, and deploy. The root `index.html` and `vercel.json` must be at the repository root, not inside another folder. The About Us page is `/about/`.
+
+**Important:** browser-local demo only, no real payment processing or cross-device reservations.
+
+---
+
 # Ember & Basil — Premium Restaurant Website
 
 A responsive, premium-styled restaurant website with a **standalone About Us page**, menu browsing, customizable online ordering, checkout, simulated reservations, order tracking and a demo staff dashboard.
@@ -19,7 +29,7 @@ The About page is a separate HTML document with its own title, metadata, content
 
 ## Deploy to Vercel (GitHub → Vercel)
 
-1. Extract the ZIP. Upload **the contents of the `ember-basil-restaurant` folder** into the root of a new GitHub repository (or push this folder as the repository root).
+1. Extract the ZIP. Upload **the extracted ZIP contents** into the root of a new GitHub repository (or push the extracted directory as the repository root).
 2. On [vercel.com](https://vercel.com), choose **Add New → Project**, select your GitHub repository, then import it.
 3. **Framework Preset:** `Other`. **Root Directory:** repository root. **Build Command:** none / override OFF. **Output Directory:** leave empty / default. There is no Node or framework build step.
 4. Deploy. Vercel's `vercel.json` serves the static site with clean URLs and trailing slashes. Visit your Vercel project URL and `/about/`.
@@ -61,7 +71,7 @@ Example seeded records (fresh browser): order `EB-1204`, booking `RSV-2048`, ema
 ## Project structure
 
 ```text
-ember-basil-restaurant/
+/ (repository root)
 ├── index.html               # Customer website / SPA flows
 ├── about/
 │   └── index.html           # Dedicated About Us page
