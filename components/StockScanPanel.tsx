@@ -5,10 +5,10 @@ import BarcodeCamera from './BarcodeCamera';
 import {stockAvailable,type BranchId,type Database,type StockReceiptLine} from '@/lib/data';
 
 type DraftLine=StockReceiptLine & {key:string;serialText:string;multiple:boolean};
-type Props={db:Database;branch:BranchId;mode:'receive'|'consume';onSubmit:(lines:StockReceiptLine[],plate?:string,posId?:string,reference?:string,notes?:string,proof?:{name:string;data:string})=>boolean;onClose:()=>void;fixedPOS?:string;adminReceive?:boolean};
+type Props={db:Database;branch:BranchId;mode:'receive'|'consume';preselectedProductId?:string;onSubmit:(lines:StockReceiptLine[],plate?:string,posId?:string,reference?:string,notes?:string,proof?:{name:string;data:string})=>boolean;onClose:()=>void;fixedPOS?:string;adminReceive?:boolean};
 const clean=(s:string)=>s.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
-export default function StockScanPanel({db,branch,mode,onSubmit,onClose,fixedPOS,adminReceive=false}:Props){
- const [scan,setScan]=useState('');const [rows,setRows]=useState<DraftLine[]>([]);const [camera,setCamera]=useState(false);const [message,setMessage]=useState('Scan a registered product; duplicate scans do not increase quantity.');
+export default function StockScanPanel({db,branch,mode,onSubmit,onClose,fixedPOS,adminReceive=false,preselectedProductId}:Props){
+ const [scan,setScan]=useState('');const [rows,setRows]=useState<DraftLine[]>(()=>preselectedProductId?[{key:preselectedProductId,productId:preselectedProductId,qty:1,serialText:'',multiple:false}]:[]);const [camera,setCamera]=useState(false);const [message,setMessage]=useState(preselectedProductId?'1 unit selected by default. Confirm the physical quantity; use Multiple units for 2 or more.':'Scan a registered product; duplicate scans do not increase quantity.');
  const [plate,setPlate]=useState('');const [chosenPos,setChosenPos]=useState('');const [reference,setReference]=useState('');const [notes,setNotes]=useState('');const [proof,setProof]=useState<{name:string;data:string}|undefined>();const scanner=useRef<HTMLInputElement>(null);
  const stock=db.inventory.filter(p=>!p.archivedAt&&p.branch===branch);
  const matches=scan.trim()?stock.filter(p=>p.barcode.toUpperCase()===clean(scan)||p.name.toLowerCase().includes(scan.toLowerCase())).slice(0,8):[];
